@@ -15,6 +15,27 @@ class ShortsListWidget extends StatefulWidget {
 
 class _ShortsListWidgetState extends State<ShortsListWidget> {
   int currentItem = 0;
+
+  void onNextPressedItem() {
+    if (currentItem + 1 < widget.item.length) {
+      setState(() {
+        currentItem += 1;
+      });
+    } else {
+      //TODO Show SnackBar Error
+    }
+  }
+
+  void onBeforePressedItem() {
+    if (currentItem > 0) {
+      setState(() {
+        currentItem -= 1;
+      });
+    } else {
+      //TODO Show SnackBar Error
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,13 +47,16 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
           Flexible(
             flex: 3,
             child: currentItem > 0
-                ? Center(
-                    child: Container(
-                      width: 100,
-                      height: 150,
-                      child: ShortsItemWidget(
-                        isCurrentItem: false,
-                        item: widget.item[currentItem - 1],
+                ? GestureDetector(
+                    onTap: onBeforePressedItem,
+                    child: Center(
+                      child: Container(
+                        width: 100,
+                        height: 150,
+                        child: ShortsItemWidget(
+                          isCurrentItem: false,
+                          item: widget.item[currentItem - 1],
+                        ),
                       ),
                     ),
                   )
@@ -51,15 +75,7 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
                   children: [
                     ArrowButton(
                       iconData: Icons.navigate_before,
-                      onPressed: () {
-                        if (currentItem > 0) {
-                          setState(() {
-                            currentItem -= 1;
-                          });
-                        } else {
-                          //TODO Show SnackBar Error
-                        }
-                      },
+                      onPressed: onBeforePressedItem,
                     ),
                     const SizedBox(
                       width: 14.0,
@@ -73,15 +89,7 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
                     ),
                     ArrowButton(
                       iconData: Icons.navigate_next,
-                      onPressed: () {
-                        if (currentItem + 1 < widget.item.length) {
-                          setState(() {
-                            currentItem += 1;
-                          });
-                        } else {
-                          //TODO Show SnackBar Error
-                        }
-                      },
+                      onPressed: onNextPressedItem,
                     ),
                   ],
                 ),
@@ -91,13 +99,16 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
           Flexible(
             flex: 3,
             child: currentItem + 1 < widget.item.length
-                ? Center(
-                    child: Container(
-                      width: 100,
-                      height: 150,
-                      child: ShortsItemWidget(
-                        isCurrentItem: false,
-                        item: widget.item[currentItem + 1],
+                ? GestureDetector(
+                    onTap: onNextPressedItem,
+                    child: Center(
+                      child: Container(
+                        width: 100,
+                        height: 150,
+                        child: ShortsItemWidget(
+                          isCurrentItem: false,
+                          item: widget.item[currentItem + 1],
+                        ),
                       ),
                     ),
                   )
