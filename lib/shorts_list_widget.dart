@@ -18,74 +18,85 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
   int currentItem = 0;
   @override
   Widget build(BuildContext context) {
-    List<Widget> itemsToDisplay = [];
-
-    // 이전 아이템이 있으면 추가
-    if (currentItem > 0) {
-      itemsToDisplay.add(ShortsItemWidget(
-        isCurrentItem: false,
-        item: widget.item[currentItem - 1],
-      ));
-    }
-
-    // 현재 아이템 추가
-    itemsToDisplay.add(
-      Container(
-        color: Colors.red,
-        child: Row(
-          children: [
-            ArrowButton(
-              iconData: Icons.navigate_before,
-              onPressed: () {
-                if (currentItem > 0) {
-                  setState(() {
-                    currentItem -= 1;
-                  });
-                } else {
-                  //TODO Show SnackBar Error
-                }
-              },
-            ),
-            const SizedBox(
-              width: 14.0,
-            ),
-            ShortsItemWidget(
-              isCurrentItem: true,
-              item: widget.item[currentItem],
-            ),
-            const SizedBox(
-              width: 14.0,
-            ),
-            ArrowButton(
-              iconData: Icons.navigate_next,
-              onPressed: () {
-                if (currentItem + 1 < widget.item.length) {
-                  setState(() {
-                    currentItem += 1;
-                  });
-                } else {
-                  //TODO Show SnackBar Error
-                }
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-
-    // 다음 아이템이 있으면 추가
-    if (currentItem + 1 < widget.item.length) {
-      itemsToDisplay.add(ShortsItemWidget(
-        isCurrentItem: false,
-        item: widget.item[currentItem + 1],
-      ));
-    }
-
     return Container(
       width: double.infinity,
       height: double.infinity,
       color: Colors.grey[300],
-      child: DynamicCenterWidget(widgets: itemsToDisplay),
+      child: Stack(
+        children: [
+          if (currentItem > 0)
+            Align(
+              alignment: FractionalOffset(0.2, 0.5),
+              child: Container(
+                width: 100,
+                child: ShortsItemWidget(
+                  isCurrentItem: false,
+                  item: widget.item[currentItem - 1],
+                ),
+              ),
+            ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              width: 300,
+              height: 500,
+              color: Colors.red,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ArrowButton(
+                    iconData: Icons.navigate_before,
+                    onPressed: () {
+                      if (currentItem > 0) {
+                        setState(() {
+                          currentItem -= 1;
+                        });
+                      } else {
+                        //TODO Show SnackBar Error
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    width: 14.0,
+                  ),
+                  ShortsItemWidget(
+                    isCurrentItem: true,
+                    item: widget.item[currentItem],
+                  ),
+                  const SizedBox(
+                    width: 14.0,
+                  ),
+                  ArrowButton(
+                    iconData: Icons.navigate_next,
+                    onPressed: () {
+                      if (currentItem + 1 < widget.item.length) {
+                        setState(() {
+                          currentItem += 1;
+                        });
+                      } else {
+                        //TODO Show SnackBar Error
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // 다음 아이템이 있으면 추가
+          if (currentItem + 1 < widget.item.length)
+            Align(
+              alignment: FractionalOffset(0.8, 0.5),
+              child: Container(
+                width: 100,
+                child: ShortsItemWidget(
+                  isCurrentItem: false,
+                  item: widget.item[currentItem + 1],
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
