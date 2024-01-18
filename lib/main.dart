@@ -32,7 +32,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<ShortsItem> list = [ShortsItem(type: ShortType.IMAGE, url: 'https://')];
+  List<ShortsItem> list = [
+    ShortsItem(
+      type: ShortType.IMAGE,
+      url: '',
+      title: 'test 1',
+    ),
+    ShortsItem(
+      type: ShortType.IMAGE,
+      url: '',
+      title: 'test 2',
+    ),
+    ShortsItem(
+      type: ShortType.IMAGE,
+      url: '',
+      title: 'test 3',
+    ),
+    ShortsItem(
+      type: ShortType.IMAGE,
+      url: '',
+      title: 'test 4',
+    ),
+    ShortsItem(
+      type: ShortType.IMAGE,
+      url: '',
+      title: 'test 5',
+    ),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,12 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: ShortsListWidget(
-          item: list,
-        ),
+      body: ShortsListWidget(
+        item: list,
       ),
     );
   }

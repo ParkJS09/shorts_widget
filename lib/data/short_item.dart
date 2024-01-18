@@ -4,7 +4,9 @@ class ShortsItem {
   ShortsItem({
     required this.type,
     required this.url,
+    required this.title,
   });
   ShortType type;
   String url;
+  String title;
 }
