@@ -38,6 +38,8 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -51,8 +53,11 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
                     onTap: onBeforePressedItem,
                     child: Center(
                       child: Container(
-                        width: 100,
-                        height: 150,
+                        width: deviceWidth * 0.2,
+                        height: deviceHeight * 0.3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
                         child: ShortsItemWidget(
                           isCurrentItem: false,
                           item: widget.item[currentItem - 1],
@@ -65,32 +70,31 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
           Center(
             child: Flexible(
               flex: 4,
-              child: Container(
-                width: 300,
-                height: 500,
-                color: Colors.red,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
+              child: SizedBox(
+                width: deviceWidth * 0.4,
+                height: deviceHeight * 0.6,
+                child: Stack(
                   children: [
-                    ArrowButton(
-                      iconData: Icons.navigate_before,
-                      onPressed: onBeforePressedItem,
-                    ),
-                    const SizedBox(
-                      width: 14.0,
-                    ),
                     ShortsItemWidget(
                       isCurrentItem: true,
                       item: widget.item[currentItem],
                     ),
-                    const SizedBox(
-                      width: 14.0,
-                    ),
-                    ArrowButton(
-                      iconData: Icons.navigate_next,
-                      onPressed: onNextPressedItem,
-                    ),
+                    if (currentItem != 0)
+                      Align(
+                        alignment: const FractionalOffset(0.01, 0.5),
+                        child: ArrowButton(
+                          iconData: Icons.navigate_before,
+                          onPressed: onBeforePressedItem,
+                        ),
+                      ),
+                    if (currentItem + 1 < widget.item.length)
+                      Align(
+                        alignment: const FractionalOffset(0.99, 0.5),
+                        child: ArrowButton(
+                          iconData: Icons.navigate_next,
+                          onPressed: onNextPressedItem,
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -103,8 +107,8 @@ class _ShortsListWidgetState extends State<ShortsListWidget> {
                     onTap: onNextPressedItem,
                     child: Center(
                       child: Container(
-                        width: 100,
-                        height: 150,
+                        width: deviceWidth * 0.2,
+                        height: deviceHeight * 0.3,
                         child: ShortsItemWidget(
                           isCurrentItem: false,
                           item: widget.item[currentItem + 1],

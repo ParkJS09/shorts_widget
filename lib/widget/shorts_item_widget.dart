@@ -15,14 +15,21 @@ class ShortsItemWidget extends StatefulWidget {
 class _ShortsItemWidgetState extends State<ShortsItemWidget> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Container(
-      width: widget.isCurrentItem ? size.width * 0.1 : size.width * 0.3,
-      decoration: const BoxDecoration(
+      width: double.infinity,
+      decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: BorderRadius.circular(
+          14.0,
+        ),
       ),
-      child: Text(
-        '${widget.item.title}',
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '${widget.item.title}',
+          ),
+        ],
       ),
     );
   }
